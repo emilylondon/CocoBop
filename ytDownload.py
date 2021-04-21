@@ -8,6 +8,7 @@ import json
 apikey = "AIzaSyBMfPWXD-sXoNLRZCUiYCknKrGApSicxwc"
 youtube = build('youtube', 'v3', developerKey=apikey)
 
+#Logger for conversion to mp3 
 class MyLogger(object):
     def debug(self, msg):
         pass
@@ -18,6 +19,7 @@ class MyLogger(object):
     def error(self, msg):
         print(msg)
 
+#Configuration for downloading the youtube video as an mp3 
 ydl_opts = {
     'format': 'bestaudio/best',
     'postprocessors': [{
