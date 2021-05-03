@@ -5,9 +5,15 @@ BLUE_PIN  = 24
 from scipy.io.wavfile import read
 import numpy as np
 import time
+import pygame 
 import pigpio
 
+#initialize PIGPIO
 pi = pigpio.pi()
+
+#set up pygame 
+pygame.mixer.init()
+pygame.mixer.music.load("newSong.wav")
 
 #import pygame, sys, time
 samplerate=44100
@@ -38,7 +44,9 @@ print(psong[1000:1050])
 pi.set_PWM_dutycycle(BLUE_PIN, 0)
 pi.set_PWM_dutycycle(GREEN_PIN, 0)
 #start visualizing!
-for t in range(len(psong)):
-    audio_max=255*(psong[t]/10000)
-    pi.set_PWM_dutycycle(RED_PIN, audio_max)
-    time.sleep(0.05)
+pygame.mixer.music.play()
+while pygame.mixer.music.get_busy() == True:
+    for t in range(len(psong)):
+        audio_max=255*(psong[t]/10000)
+        pi.set_PWM_dutycycle(RED_PIN, audio_max)
+        time.sleep(0.05)
