@@ -23,7 +23,7 @@ print(r.shape)
 
 psong=window_rms(r, window_size=int(spwin))
 print(len(psong))
-print(psong[900:920])
+print(psong[1000:1050])
 #2205 samples per window 
 
     #start visualizing!
