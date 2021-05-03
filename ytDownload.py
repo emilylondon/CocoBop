@@ -22,6 +22,7 @@ class MyLogger(object):
 #Configuration for downloading the youtube video as an mp3 
 ydl_opts = {
     'format': 'bestaudio/best',
+    'outtmpl': 'newSong.%(ext)s',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
@@ -48,8 +49,13 @@ while True:
         
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([URL])
+<<<<<<< HEAD
         os.rename(res['items'][select-1]['snippet']['title']+"-"+res['items'][select-1]['id']['videoId']+".mp3", "newSong.mp3")
         os.system("omxplayer " + "newSong.mp3")
+=======
+        os.system("afplay " + "newSong.mp3")
+        os.system("rm " + "newSong.mp3")
+>>>>>>> 4eec89f2c72a1610964f462eb7ded11c33ec3c9c
 
 
     
