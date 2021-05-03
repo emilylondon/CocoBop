@@ -22,13 +22,13 @@ spwin=samplerate/resolution
 #Thread for music player
 def music_player():
     logging.info("Playing song now")
-    os.system("omxplayer " + "newSong.mp3")
+    os.system("omxplayer " + "newSong.wav")
     logging.info("Song done")
 
 def audio_visualizer(psong):
     logging.info("Visualizing audio")
     for t in range(len(psong)):
-        audio_max=255*(psong[t]/5000)
+        audio_max=255*(psong[t]/10000)
         pi.set_PWM_dutycycle(RED_PIN, audio_max)
         time.sleep(0.05)
     logging.info("Song over")
