@@ -3,7 +3,7 @@ import numpy as np
 
 #import pygame, sys, time
 samplerate=44100
-resolution=20
+resolution=10
 spwin=samplerate/resolution
 
 #RMS for np array
@@ -11,7 +11,7 @@ def window_rms(a, window_size=2):
     energy_list = []
     for s in range(0, a.shape[0], window_size):
         e = s + window_size
-        energy = sum(abs(a[s:e]**2))
+        energy = np.sum(np.abs(a[s:e]**2))
         energy_list.append(energy)
     return energy_list
 
