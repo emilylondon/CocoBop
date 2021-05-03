@@ -16,7 +16,7 @@ r = np.array(a[1], dtype=float)
 print(r[0])
 print(r.shape)
 
-psong=window_rms(r, window_size=spwin)
+psong=window_rms(r, window_size=int(spwin))
 print(psong.shape)
 print(psong[2000:2020])
 #2205 samples per window 
