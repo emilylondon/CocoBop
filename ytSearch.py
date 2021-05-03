@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import paho.mqtt.cient as mqtt 
+import paho.mqtt.client as mqtt 
 from apiclient.discovery import build
 
 #API key for YouTube Search API

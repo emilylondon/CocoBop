@@ -1,5 +1,5 @@
-import paho.mqtt.cient as mqtt 
 from __future__ import unicode_literals
+import paho.mqtt.client as mqtt 
 from youtube_dl import YoutubeDL
 import os 
 
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
     client.loop_start()
-
-
+    while True:
+        time.sleep(1)
