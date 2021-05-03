@@ -49,7 +49,7 @@ while True:
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([URL])
         os.rename(res['items'][select-1]['snippet']['title']+"-"+res['items'][select-1]['id']['videoId']+".mp3", "newSong.mp3")
-        os.system("afplay " + "newSong.mp3")
+        os.system("omxplayer " + "newSong.mp3")
 
 
     
