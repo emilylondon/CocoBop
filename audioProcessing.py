@@ -35,6 +35,8 @@ print(len(psong))
 print(psong[1000:1050])
 #2205 samples per window 
 
+pi.set_PWM_dutycycle(BLUE_PIN, 0)
+pi.set_PWM_dutycycle(GREEN_PIN, 0)
 #start visualizing!
 for t in range(len(psong)):
     audio_max=255*(psong[t]/10000)
