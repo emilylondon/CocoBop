@@ -6,8 +6,8 @@ import logging
 import pigpio
 import os
 import sys
-sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
-import grovepi
+#sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
+#import grovepi
 
 #set up input pins for rotary encoder and LED pins
 RED_PIN   = 17
@@ -38,24 +38,24 @@ resolution=20
 spwin=samplerate/resolution
 
 #set up GrovePi pin
-grovepi.pinMode(PORT_ROTARY, "INPUT")
+#grovepi.pinMode(PORT_ROTARY, "INPUT")
 
 #Thread for color picking 
-def c_pick():
-    while True:
-        rdg = grovepi.analogRead(PORT_ROTARY)
-    if rdg < 170:
-        GREEN = 1.5*rdg
-    elif rdg < 340:
-        RED = 255-(1.5*(rdg-170))
-    elif rdg < 510:
-        BLUE = 1.5 * (rdg-340)
-    elif rdg < 680:
-        GREEN = 255 - (1.5*(rdg-510))
-    elif rdg < 850:
-        RED = 1.5 * (rdg-680)
-    elif rdg < 1020:
-        BLUE = 255 - (1.5*(rdg-850))
+#def c_pick():
+    #while True:
+    #    rdg = grovepi.analogRead(PORT_ROTARY)
+    #if rdg < 170:
+    #    GREEN = 1.5*rdg
+    #elif rdg < 340:
+    #    RED = 255-(1.5*(rdg-170))
+    #elif rdg < 510:
+    #    BLUE = 1.5 * (rdg-340)
+    #elif rdg < 680:
+    #    GREEN = 255 - (1.5*(rdg-510))
+    #elif rdg < 850:
+    #    RED = 1.5 * (rdg-680)
+    #elif rdg < 1020:
+    #    BLUE = 255 - (1.5*(rdg-850))
 
 #Thread for music player
 def music_player():
