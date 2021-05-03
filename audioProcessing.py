@@ -1,16 +1,14 @@
-from scipy.io import wavfile 
-import pygame, sys, time
-#import testStrip
+from scipy.io.wavfile import read
+import numpy as np
+#import pygame, sys, time
 
 file_name = 'newSong.wav'
-sample_rate, amplitude = wavfile.read(file_name)
-print(sample_rate)
-print(amplitude)
+a = read(file_name)
+r = np.array(a[1], dtype=float)
+print(r[0])
+print(r.shape)
 
 	#initiate graphic interface and play audio piece
-pygame.init()
-pygame.mixer.music.load(file_name)
-pygame.mixer.music.play()
-now = time.time()	
+
 
     #start visualizing!
