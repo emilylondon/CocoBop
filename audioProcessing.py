@@ -8,7 +8,12 @@ spwin=samplerate/resolution
 
 #RMS for np array
 def window_rms(a, window_size=2):
-    return np.sqrt(sum([a[window_size-i-1:len(a)-i]**2 for i in range(window_size-1)])/window_size)
+    energy_list = []
+    for s in range(0, a.shape[0], window_size):
+        e = s + window_size
+        energy = sum(abs(a[s:e]**2))
+        energy_list.append(energy)
+    return energy_list
 
 file_name = 'newSong.wav'
 a = read(file_name)
@@ -17,7 +22,7 @@ print(r[0])
 print(r.shape)
 
 psong=window_rms(r, window_size=int(spwin))
-print(psong.shape)
+print(len(psong))
 print(psong[2000:2020])
 #2205 samples per window 
 
