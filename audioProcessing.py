@@ -1,5 +1,6 @@
 from scipy.io.wavfile import read
 import numpy as np
+import time
 
 #import pygame, sys, time
 samplerate=44100
@@ -27,4 +28,7 @@ print(len(psong))
 print(psong[1000:1050])
 #2205 samples per window 
 
-    #start visualizing!
+#start visualizing!
+for t in range(len(psong)):
+    audio_max=255*(psong[t]/10000)
+    time.sleep(0.05)
