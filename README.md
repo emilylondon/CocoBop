@@ -31,3 +31,7 @@ run:
 ```
 /Applications/Python\ 3.7/Install\ Certificates.command
 ```
+Install Paho-Mqtt
+```
+pip3 install paho-mqtt
+```
