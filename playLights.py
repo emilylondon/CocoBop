@@ -21,7 +21,7 @@ ydl_opts = {
     'outtmpl': 'newSong.%(ext)s',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
+        'preferredcodec': 'wav',
         'preferredquality': '192',
     }],
     'logger': MyLogger(),

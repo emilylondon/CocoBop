@@ -35,3 +35,17 @@ Install Paho-Mqtt
 ```
 pip3 install paho-mqtt
 ```
+Install Librosa, Numpy, and PyGame
+```
+pip3 install librosa
+pip3 install numpy 
+pip3 install pygame
+
+```
+
+Install pigpio for LED strip
+
+```
+pip3 install pigpio
+
+```
