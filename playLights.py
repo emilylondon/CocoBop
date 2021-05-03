@@ -38,6 +38,7 @@ def on_connect(client, userdata, flags, rc):
 def download_audio(client, userdata, msg):
     try:
         ytLink= str(msg.payload).encode("utf-8")
+        print(ytLink)
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([ytLink])
     except Exception:
