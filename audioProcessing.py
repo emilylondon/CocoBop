@@ -11,7 +11,8 @@ def window_rms(a, window_size=2):
     energy_list = []
     for s in range(0, a.shape[0], window_size):
         e = s + window_size
-        energy = np.sum(np.abs(a[s:e]**2))
+        #energy = np.sum(np.abs(a[s:e]**2))
+        energy = np.sqrt(np.mean(a[s:e]**2))
         energy_list.append(energy)
     return energy_list
 
