@@ -5,22 +5,34 @@ BLUE_PIN  = 24
 from scipy.io.wavfile import read
 import numpy as np
 import time
-import pygame 
+import threading
+import logging
 import pigpio
+import os
 
-#initialize PIGPIO
 pi = pigpio.pi()
 
-#set up pygame 
-pygame.mixer.init()
-pygame.mixer.music.load("newSong.wav")
-
-#import pygame, sys, time
+#set up audio processing parameters
 samplerate=44100
 resolution=20
 spwin=samplerate/resolution
 
 #RMS for np array
+
+#Thread for music player
+def music_player():
+    logging.info("Playing song now")
+    os.system("omxplayer " + "newSong.mp3")
+    logging.info("Song done")
+
+def audio_visualizer(psong):
+    logging.info("Visualizing audio")
+    for t in range(len(psong)):
+        audio_max=255*(psong[t]/5000)
+        pi.set_PWM_dutycycle(RED_PIN, audio_max)
+        time.sleep(0.05)
+    logging.info("Song over")
+
 def window_rms(a, window_size=2):
     energy_list = []
     for s in range(0, a.shape[0], window_size):
@@ -43,10 +55,10 @@ print(psong[1000:1050])
 
 pi.set_PWM_dutycycle(BLUE_PIN, 0)
 pi.set_PWM_dutycycle(GREEN_PIN, 0)
+
 #start visualizing!
-pygame.mixer.music.play()
-while pygame.mixer.music.get_busy() == True:
-    for t in range(len(psong)):
-        audio_max=255*(psong[t]/10000)
-        pi.set_PWM_dutycycle(RED_PIN, audio_max)
-        time.sleep(0.05)
+if __name__ == "__main__":
+    t0 = threading.Thread(target=music_player)
+    t1 = threading.Thread(target=audio_visualizer, args = (psong,))
+    t0.start()
+    t1.start()
