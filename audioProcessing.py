@@ -3,7 +3,7 @@ import numpy as np
 
 #import pygame, sys, time
 samplerate=44100
-resolution=10
+resolution=20
 spwin=samplerate/resolution
 
 #RMS for np array
@@ -23,7 +23,7 @@ print(r.shape)
 
 psong=window_rms(r, window_size=int(spwin))
 print(len(psong))
-print(psong[2000:2020])
+print(psong[900:920])
 #2205 samples per window 
 
     #start visualizing!
