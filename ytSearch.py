@@ -28,4 +28,4 @@ if __name__ == '__main__':
 
         select = int(input('Enter number to select song: '))
         ytUrl="https://www.youtube.com/watch?v=" + res['items'][select-1]['id']['videoId']
-        client.publish("emilylondon/yturl", ytURL)
+        client.publish("emilylondon/yturl", ytUrl)
