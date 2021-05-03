@@ -6,9 +6,6 @@ import logging
 import pigpio
 import os
 import sys
-
-sys.path.append('/../venv/Dexter/GrovePi/Software/Python') #grovepi stuff
-
 import grovepi
 
 #set up input pins for rotary encoder and LED pins
