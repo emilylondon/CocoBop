@@ -13,7 +13,6 @@ import sys
 RED_PIN   = 17
 GREEN_PIN = 22
 BLUE_PIN  = 24
-PORT_ROTARY = 1
 
 #Set up LED, initialize to red 
 pi = pigpio.pi()
@@ -41,7 +40,27 @@ spwin=samplerate/resolution
 #grovepi.pinMode(PORT_ROTARY, "INPUT")
 
 #Thread for color picking 
-#def c_pick():
+def c_pick():
+    while True:
+        for d in range(255):
+            RED = d
+            time.sleep(0.005)
+        for e in range(255, 0, -1):
+            BLUE = e
+            time.sleep(0.005)
+        for f in range(255):
+            GREEN = f
+            time.sleep(0.005)
+        for d in range(255, 0, -1):
+            RED = d
+            time.sleep(0.005)
+        for e in range(255):
+            BLUE = e
+            time.sleep(0.005)
+        for f in range(255, 0, -1):
+            GREEN = f
+            time.sleep(0.005)
+    
     #while True:
     #    rdg = grovepi.analogRead(PORT_ROTARY)
     #if rdg < 170:
@@ -102,8 +121,8 @@ psong=window_rms(r, window_size=int(spwin))
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
-    #t2 = threading.Thread(target=c_pick)
+    t2 = threading.Thread(target=c_pick)
     t1.start()
     t0.start()
-    #t2.start()
+    t2.start()
     
