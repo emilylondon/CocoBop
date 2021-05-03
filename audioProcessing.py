@@ -102,8 +102,8 @@ psong=window_rms(r, window_size=int(spwin))
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
-    t2 = threading.Thread(target=c_pick)
+    #t2 = threading.Thread(target=c_pick)
     t1.start()
     t0.start()
-    t2.start()
+    #t2.start()
     
