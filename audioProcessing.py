@@ -1,6 +1,7 @@
 import librosa
 import numpy as np
 import pygame
+import testStrip
 
 
 def clamp(min_value, max_value, value):
@@ -93,7 +94,7 @@ width = screen_w/r
 x = (screen_w - width*r)/2
 
 for c in frequencies:
-    bars.append(AudioBar(x, 300, c, (0, 255, 0), max_height=400, width=width))
+    bars.append(AudioBar(x, 300, c, (255, 0, 0), max_height=400, width=width))
     x += width
 
 t = pygame.time.get_ticks()
@@ -120,6 +121,7 @@ while running:
 
     for b in bars:
         b.update(deltaTime, get_decibel(pygame.mixer.music.get_pos()/1000.0, b.freq))
+        audio_max = get_decibel(pygame.mixer.music.get_pos()/1000.0, 50)
         b.render(screen)
 
     # Flip the display

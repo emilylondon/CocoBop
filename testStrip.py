@@ -6,6 +6,7 @@ import pigpio
 import time 
 
 pi = pigpio.pi()
+global audio_max
 audio_max = 255
 
 while True:
