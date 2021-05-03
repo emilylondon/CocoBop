@@ -6,6 +6,9 @@ import logging
 import pigpio
 import os
 import sys
+
+sys.path.append('/home/pi/Dexter/GrovePi/Software/Python') #grovepi stuff
+
 import grovepi
 
 #set up input pins for rotary encoder and LED pins
@@ -19,8 +22,6 @@ pi = pigpio.pi()
 pi.set_PWM_dutycycle(RED_PIN, 255)
 pi.set_PWM_dutycycle(BLUE_PIN, 0)
 pi.set_PWM_dutycycle(GREEN_PIN, 0)
-
-sys.path.append('/home/pi/Dexter/GrovePi/Software/Python') #grovepi stuff
 
 #Brightness Values for RGB, make them global so they can be modified across threads
 global RED 

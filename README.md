@@ -42,6 +42,7 @@ pip3 install numpy
 pip3 install pygame
 pip3 install scipy
 sudo apt-get install libatlas-base-dev
+sudo apt-get install libsdl-ttf2.0-0
 
 ```
 
@@ -51,4 +52,10 @@ Install pigpio for LED strip and start the daemon
 pip3 install pigpio
 sudo pigpiod 
 
+```
+
+Install GrovePi stuff 
+
+```
+curl -kL dexterindustries.com/update_grovepi | bash
 ```
