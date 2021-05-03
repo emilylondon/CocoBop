@@ -90,9 +90,9 @@ def audio_visualizer(psong):
         audio_max=255*(psong[t]/9000)
         if audio_max > 255:
             audio_max=255
-        pi.set_PWM_dutycycle(RED_PIN, RED)
-        pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
-        pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
+        pi.set_PWM_dutycycle(RED_PIN, (audio_max+RED)/2)
+        pi.set_PWM_dutycycle(GREEN_PIN, (audio_max+GREEN)/2)
+        pi.set_PWM_dutycycle(BLUE_PIN, (audio_max+BLUE)/2)
         time.sleep(0.05)
     logging.info("Song over")
 
