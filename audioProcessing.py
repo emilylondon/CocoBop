@@ -1,6 +1,13 @@
+RED_PIN   = 17
+GREEN_PIN = 22
+BLUE_PIN  = 24
+
 from scipy.io.wavfile import read
 import numpy as np
 import time
+import pigpio
+
+pi = pigpio.pi()
 
 #import pygame, sys, time
 samplerate=44100
@@ -31,4 +38,5 @@ print(psong[1000:1050])
 #start visualizing!
 for t in range(len(psong)):
     audio_max=255*(psong[t]/10000)
+    pi.set_PWM_dutycycle(RED_PIN, audio_max)
     time.sleep(0.05)
