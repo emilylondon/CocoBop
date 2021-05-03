@@ -28,7 +28,6 @@ def music_player():
 def audio_visualizer(psong):
     logging.info("Visualizing audio")
     for t in range(len(psong)):
-        print(psong[t])
         audio_max=255*(psong[t]/10000)
         pi.set_PWM_dutycycle(RED_PIN, audio_max)
         time.sleep(0.05)
