@@ -25,7 +25,7 @@ ydl_opts = {
     'outtmpl': 'newSong.%(ext)s',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
+        'preferredcodec': 'wav',
         'preferredquality': '192',
     }],
     'logger': MyLogger(),
@@ -49,8 +49,8 @@ while True:
         
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([URL])
-        os.system("afplay " + "newSong.mp3")
-        os.system("rm " + "newSong.mp3")
+        os.system("afplay " + "newSong.wav")
+        #os.system("rm " + "newSong.mp3")
 
 
     
