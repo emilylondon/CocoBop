@@ -7,7 +7,7 @@ import pigpio
 import os
 import sys
 
-sys.path.append('/home/pi/Dexter/GrovePi/Software/Python') #grovepi stuff
+sys.path.append('/venv/Dexter/GrovePi/Software/Python') #grovepi stuff
 
 import grovepi
 

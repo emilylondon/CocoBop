@@ -57,5 +57,5 @@ sudo pigpiod
 Install GrovePi stuff 
 
 ```
-curl -kL dexterindustries.com/update_grovepi | bash
+curl -sL https://github.com/Seeed-Studio/grove.py/raw/master/install.sh | sudo bash -s -
 ```
