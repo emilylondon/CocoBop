@@ -40,12 +40,15 @@ Install Librosa, Numpy, and PyGame
 pip3 install librosa
 pip3 install numpy 
 pip3 install pygame
+pip3 install scipy
+sudo apt-get install libatlas-base-dev
 
 ```
 
-Install pigpio for LED strip
+Install pigpio for LED strip and start the daemon
 
 ```
 pip3 install pigpio
+sudo pigpiod 
 
 ```

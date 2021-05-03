@@ -1,6 +1,6 @@
 from scipy.io import wavfile 
 import pygame, sys, time
-import testStrip
+#import testStrip
 
 file_name = 'newSong.wav'
 sample_rate, amplitude = wavfile.read(file_name)
