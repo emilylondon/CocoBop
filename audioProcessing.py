@@ -5,7 +5,7 @@ import threading
 import logging
 import pigpio
 import os
-from RPi import GPIO
+import Rpi.GPIO as GPIO
 import sys
 #sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 #import grovepi
