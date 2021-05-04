@@ -27,7 +27,7 @@ pi.set_PWM_dutycycle(GREEN_PIN, 0)
 #callback for encoder
 #function for reading rotary encoder
 def rotary_callback(count):
-    colors = []
+    colors = [0, 0, 0]
     if count < 0:
         count = 1534
     elif count < 255:
