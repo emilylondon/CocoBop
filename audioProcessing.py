@@ -30,8 +30,6 @@ def rotary_callback(counter):
     return counter
 
 #Set up Rotary Encoder 
-my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
-my_rotary.setup_rotary(rotary_callback=rotary_callback)
 
 
 #Brightness Values for RGB, make them global so they can be modified across threads
@@ -53,8 +51,11 @@ def c_pick():
     global BLUE
     global GREEN
 
+    my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
+    my_rotary.setup_rotary(rotary_callback=rotary_callback)
     my_rotary.watch()
     while True: 
+        print("thread is running")
         count = 0
         count = rotary_callback(count)
         print(count)
@@ -74,7 +75,7 @@ def c_pick():
             BLUE = 255 - (count-1275)
         elif count > 1535:
             count = 0
-
+        time.sleep(0.05)
 
 #Thread for music player
 def music_player():
