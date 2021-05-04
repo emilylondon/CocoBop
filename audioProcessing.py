@@ -33,7 +33,6 @@ def rotary_callback(counter):
 my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
 my_rotary.setup_rotary(rotary_callback=rotary_callback)
 
-my_rotary.watch()
 
 #Brightness Values for RGB, make them global so they can be modified across threads
 RED = 255
@@ -54,6 +53,7 @@ def c_pick():
     global BLUE
     global GREEN
 
+    my_rotary.watch()
     while True: 
         count = 0
         count = rotary_callback(count)
