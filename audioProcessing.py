@@ -20,11 +20,11 @@ DT = 4
 
 #Brightness Values for RGB, make them global so they can be modified across threads
 global RED
-RED=255
+RED=0
 global GREEN
 GREEN = 0
 global BLUE 
-BLUE = 0 
+BLUE = 255 
 
 #Set up LED, initialize to red 
 pi = pigpio.pi()
@@ -36,10 +36,10 @@ pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 #function for reading rotary encoder
 def rotary_callback(count):
     print(count)
-    cscaled = count * 12 
-    if cscaled < 0:
-        cscaled = 1534
-    elif cscaled < 255:
+    cscaled = count * 15 
+    #if cscaled < 0:
+    #    cscaled = 1534
+    if cscaled < 255:
         GREEN = cscaled
     elif cscaled < 510:
         RED = 255 - (cscaled-255)
@@ -51,8 +51,8 @@ def rotary_callback(count):
         RED = cscaled - 1020
     elif cscaled < 1535:
         BLUE = 255 - (cscaled-1275)
-    elif cscaled > 1535:
-        cscaled = 0
+    #elif cscaled > 1535:
+    #    cscaled = 0
     time.sleep(0.05)
 
 
