@@ -57,6 +57,7 @@ def c_pick():
     while True: 
         count = 0
         count = rotary_callback(count)
+        print(count)
         if count < 0:
             count = 1534
         elif count < 255:
