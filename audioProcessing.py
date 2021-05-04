@@ -20,9 +20,9 @@ DT = 4
 
 #Brightness Values for RGB, make them global so they can be modified across threads
 
-RED=0
+RED=255
 GREEN = 0
-BLUE = 255 
+BLUE = 0 
 
 #Set up LED, initialize to red 
 pi = pigpio.pi()
