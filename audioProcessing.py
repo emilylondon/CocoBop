@@ -26,7 +26,7 @@ pi.set_PWM_dutycycle(GREEN_PIN, 0)
 
 #callback for encoder
 #function for reading rotary encoder
-def rotary_callback(count, RED, GREEN, BLUE):
+def rotary_callback(count):
     print(count)
     cscaled = count * 12 
     if cscaled < 0:
