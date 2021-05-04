@@ -25,7 +25,7 @@ pi.set_PWM_dutycycle(BLUE_PIN, 0)
 pi.set_PWM_dutycycle(GREEN_PIN, 0)
 
 #Set up Rotary Encoder 
-my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=0)
+my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
 my_rotary.setup_rotary(rotary_callback=rotary_callback)
 
 my_rotary.watch()
