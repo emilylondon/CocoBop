@@ -7,6 +7,8 @@ import pigpio
 import os
 import Rpi.GPIO as GPIO
 import sys
+from pigpio_encoder import pigpio_encoder
+
 #sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 #import grovepi
 
@@ -24,9 +26,10 @@ pi.set_PWM_dutycycle(BLUE_PIN, 0)
 pi.set_PWM_dutycycle(GREEN_PIN, 0)
 
 #Set up Rotary Encoder 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(CLK, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=0)
+my_rotary.setup_rotary(rotary_callback=rotary_callback)
+
+my_rotary.watch()
 
 #Brightness Values for RGB, make them global so they can be modified across threads
 RED = 255
@@ -44,16 +47,8 @@ spwin=samplerate/resolution
 #set up GrovePi pin
 #grovepi.pinMode(PORT_ROTARY, "INPUT")
 #function for reading rotary encoder
-def rotary_read(count, clkLastState, CLK, DT):
-    clkState = GPIO.input(CLK)
-    dtState = GPIO.input(DT)
-    if clkState != clkLastState:
-        if dtState != clkState:
-            count += 1
-        else: 
-            count -= 1
-    clkLastState = clkState
-    return count
+def rotary_callback(counter):
+    return counter
 
 
 #Thread for color picking 
@@ -61,11 +56,10 @@ def c_pick():
     global RED
     global BLUE
     global GREEN
-    count = 0
-    clkLastState = GPIO.input(CLK)
 
     while True: 
-        count = rotary_read(count, clkLastState, CLK, DT)
+        count = 0
+        count = rotary_callback(count)
         if count < 0:
             count = 1534
         elif count < 255:
