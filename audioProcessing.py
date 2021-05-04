@@ -5,7 +5,6 @@ import threading
 import logging
 import pigpio
 import os
-import Rpi.GPIO as GPIO
 import sys
 from pigpio_encoder import pigpio_encoder
 
