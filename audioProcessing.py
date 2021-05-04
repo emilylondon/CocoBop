@@ -61,6 +61,9 @@ samplerate=44100
 resolution=20
 spwin=samplerate/resolution
 
+#Color picking thread 
+def color_picker():
+    print("Thread working")
 
 #Thread for music player
 def music_player():
@@ -112,7 +115,9 @@ psong=window_rms(r, window_size=int(spwin))
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
+    t2 = threading.Thread(target=color_picker)
     t1.start()
     t0.start()
+    t2.start()
     
     

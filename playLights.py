@@ -43,7 +43,7 @@ def download_audio(client, userdata, msg):
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([ytLink])
             os.system("python3 " + "audioProcessing.py")
-            os.system("rm " + "newSong.wav")
+            #os.system("rm " + "newSong.wav")
             print("Downloaded!")
     except Exception:
         print("Error downloading")
