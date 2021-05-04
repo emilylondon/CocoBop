@@ -116,8 +116,8 @@ def audio_visualizer(psong):
         time.sleep(0.05)
     logging.info("Song over")
     pi.set_PWM_dutycycle(RED_PIN, 0)
-        pi.set_PWM_dutycycle(GREEN_PIN, 0)
-        pi.set_PWM_dutycycle(BLUE_PIN, 0)
+    pi.set_PWM_dutycycle(GREEN_PIN, 0)
+    pi.set_PWM_dutycycle(BLUE_PIN, 0)
 
 #function for RMS 
 def window_rms(a, window_size=2):
