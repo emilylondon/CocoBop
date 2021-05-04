@@ -87,7 +87,6 @@ def audio_visualizer(psong):
         audio_max=255*(psong[t]/9000)
         if audio_max > 255:
             audio_max=255
-        colors = rotary_callback(count)
         pi.set_PWM_dutycycle(RED_PIN, (audio_max+colors[0])/2)
         pi.set_PWM_dutycycle(GREEN_PIN, (audio_max+colors[1])/2)
         pi.set_PWM_dutycycle(BLUE_PIN, (audio_max+colors[2])/2)
