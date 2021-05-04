@@ -24,6 +24,11 @@ pi.set_PWM_dutycycle(RED_PIN, 255)
 pi.set_PWM_dutycycle(BLUE_PIN, 0)
 pi.set_PWM_dutycycle(GREEN_PIN, 0)
 
+#callback for encoder
+#function for reading rotary encoder
+def rotary_callback(counter):
+    return counter
+
 #Set up Rotary Encoder 
 my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
 my_rotary.setup_rotary(rotary_callback=rotary_callback)
@@ -42,13 +47,6 @@ ROT_MAX=1023
 samplerate=44100
 resolution=20
 spwin=samplerate/resolution
-
-#set up GrovePi pin
-#grovepi.pinMode(PORT_ROTARY, "INPUT")
-#function for reading rotary encoder
-def rotary_callback(counter):
-    return counter
-
 
 #Thread for color picking 
 def c_pick():
