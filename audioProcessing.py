@@ -26,35 +26,29 @@ pi.set_PWM_dutycycle(GREEN_PIN, 0)
 
 #callback for encoder
 #function for reading rotary encoder
-def rotary_callback(count):
-    global colors
-    colors = [0, 0, 0]
+def rotary_callback(count, RED, GREEN, BLUE):
     print(count)
     cscaled = count * 12 
     if cscaled < 0:
         cscaled = 1534
     elif cscaled < 255:
-        colors[1] = cscaled
+        GREEN = cscaled
     elif cscaled < 510:
-        colors[0] = 255 - (cscaled-255)
+        RED = 255 - (cscaled-255)
     elif cscaled < 765:
-        colors[2] = cscaled - 510
+        BLUE = cscaled - 510
     elif cscaled < 1020:
-        colors[1] = 255 - (count-765)
+        GREEN = 255 - (count-765)
     elif cscaled < 1275:
-        colors[0] = cscaled - 1020
+        RED = cscaled - 1020
     elif cscaled < 1535:
-        colors[2] = 255 - (cscaled-1275)
+        BLUE = 255 - (cscaled-1275)
     elif cscaled > 1535:
         cscaled = 0
     time.sleep(0.05)
-    return colors 
+    return RED, BLUE, GREEN
 
 
-#Brightness Values for RGB, make them global so they can be modified across threads
-RED = 255
-GREEN = 0
-BLUE = 0
 
 #Divisor 
 ROT_MAX=1023
@@ -66,6 +60,14 @@ spwin=samplerate/resolution
 
 #Color picking thread 
 def color_picker():
+
+    #Brightness Values for RGB, make them global so they can be modified across threads
+    global RED
+    RED=255
+    global GREEN
+    GREEN = 0
+    global BLUE 
+    BLUE = 0 
     print("Thread working")
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
@@ -87,9 +89,9 @@ def audio_visualizer(psong):
         audio_max=255*(psong[t]/9000)
         if audio_max > 255:
             audio_max=255
-        pi.set_PWM_dutycycle(RED_PIN, (audio_max+colors[0])/2)
-        pi.set_PWM_dutycycle(GREEN_PIN, (audio_max+colors[1])/2)
-        pi.set_PWM_dutycycle(BLUE_PIN, (audio_max+colors[2])/2)
+        pi.set_PWM_dutycycle(RED_PIN, (audio_max+RED)/2)
+        pi.set_PWM_dutycycle(GREEN_PIN, (audio_max+GREEN)/2)
+        pi.set_PWM_dutycycle(BLUE_PIN, (audio_max+BLUE)/2)
         time.sleep(0.05)
     logging.info("Song over")
 
