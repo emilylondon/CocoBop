@@ -18,11 +18,19 @@ BLUE_PIN  = 24
 CLK = 18
 DT = 4
 
+#Brightness Values for RGB, make them global so they can be modified across threads
+global RED
+RED=255
+global GREEN
+GREEN = 0
+global BLUE 
+BLUE = 0 
+
 #Set up LED, initialize to red 
 pi = pigpio.pi()
-pi.set_PWM_dutycycle(RED_PIN, 255)
-pi.set_PWM_dutycycle(BLUE_PIN, 0)
-pi.set_PWM_dutycycle(GREEN_PIN, 0)
+pi.set_PWM_dutycycle(RED_PIN, RED)
+pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
+pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 
 #callback for encoder
 #function for reading rotary encoder
@@ -46,7 +54,6 @@ def rotary_callback(count):
     elif cscaled > 1535:
         cscaled = 0
     time.sleep(0.05)
-    return RED, BLUE, GREEN
 
 
 
@@ -60,14 +67,6 @@ spwin=samplerate/resolution
 
 #Color picking thread 
 def color_picker():
-
-    #Brightness Values for RGB, make them global so they can be modified across threads
-    global RED
-    RED=255
-    global GREEN
-    GREEN = 0
-    global BLUE 
-    BLUE = 0 
     print("Thread working")
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
