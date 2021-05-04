@@ -47,7 +47,11 @@ def rotary_callback(count):
     print(cscaled)
     #if cscaled < 0:
     #    cscaled = 1534
-    if cscaled <= 250:
+    if cscaled == 0:
+        RED = 255
+        GREEN = 0
+        BLUE = 0 
+    elif cscaled <= 250:
         GREEN = cscaled
     elif 250 < cscaled <= 500:
         RED = 255 - (cscaled-250)
@@ -59,6 +63,10 @@ def rotary_callback(count):
         RED = cscaled - 1000
     elif 1250 < cscaled < 1500:
         BLUE = 255 - (cscaled-1250)
+    elif cscaled == 1500:
+        RED = 255
+        GREEN = 0
+        BLUE = 0 
     #elif cscaled > 1535:
     #    cscaled = 0
     time.sleep(0.05)
