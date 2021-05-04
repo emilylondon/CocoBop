@@ -5,6 +5,7 @@ import threading
 import logging
 import pigpio
 import os
+from RPi import GPIO
 import sys
 #sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 #import grovepi
@@ -13,6 +14,8 @@ import sys
 RED_PIN   = 17
 GREEN_PIN = 22
 BLUE_PIN  = 24
+CLK = 18
+DT = 4
 
 #Set up LED, initialize to red 
 pi = pigpio.pi()
@@ -20,12 +23,14 @@ pi.set_PWM_dutycycle(RED_PIN, 255)
 pi.set_PWM_dutycycle(BLUE_PIN, 0)
 pi.set_PWM_dutycycle(GREEN_PIN, 0)
 
+#Set up Rotary Encoder 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(CLK, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
 #Brightness Values for RGB, make them global so they can be modified across threads
-global RED 
 RED = 255
-global GREEN
 GREEN = 0
-global BLUE 
 BLUE = 0
 
 #Divisor 
@@ -38,43 +43,46 @@ spwin=samplerate/resolution
 
 #set up GrovePi pin
 #grovepi.pinMode(PORT_ROTARY, "INPUT")
+#function for reading rotary encoder
+def rotary_read(count, clkLastState, CLK, DT):
+    clkState = GPIO.input(CLK)
+    dtState = GPIO.input(DT)
+    if clkState != clkLastState:
+        if dtState != clkState:
+            count += 1
+        else: 
+            count -= 1
+    clkLastState = clkState
+    return count
+
 
 #Thread for color picking 
 def c_pick():
-    while True:
-        for d in range(255):
-            RED = d
-            time.sleep(0.005)
-        for e in range(255, 0, -1):
-            BLUE = e
-            time.sleep(0.005)
-        for f in range(255):
-            GREEN = f
-            time.sleep(0.005)
-        for d in range(255, 0, -1):
-            RED = d
-            time.sleep(0.005)
-        for e in range(255):
-            BLUE = e
-            time.sleep(0.005)
-        for f in range(255, 0, -1):
-            GREEN = f
-            time.sleep(0.005)
-    
-    #while True:
-    #    rdg = grovepi.analogRead(PORT_ROTARY)
-    #if rdg < 170:
-    #    GREEN = 1.5*rdg
-    #elif rdg < 340:
-    #    RED = 255-(1.5*(rdg-170))
-    #elif rdg < 510:
-    #    BLUE = 1.5 * (rdg-340)
-    #elif rdg < 680:
-    #    GREEN = 255 - (1.5*(rdg-510))
-    #elif rdg < 850:
-    #    RED = 1.5 * (rdg-680)
-    #elif rdg < 1020:
-    #    BLUE = 255 - (1.5*(rdg-850))
+    global RED
+    global BLUE
+    global GREEN
+    count = 0
+    clkLastState = GPIO.input(CLK)
+
+    while True: 
+        count = rotary_read(count, clkLastState, CLK, DT)
+        if count < 0:
+            count = 1534
+        elif count < 255:
+            GREEN = count
+        elif count < 510:
+            RED = 255 - (count-255)
+        elif count < 765:
+            BLUE = count - 510
+        elif count < 1020:
+            GREEN = 255 - (count-765)
+        elif count < 1275:
+            RED = count - 1020
+        elif count < 1535:
+            BLUE = 255 - (count-1275)
+        elif count > 1535:
+            count = 0
+
 
 #Thread for music player
 def music_player():
