@@ -19,11 +19,9 @@ CLK = 18
 DT = 4
 
 #Brightness Values for RGB, make them global so they can be modified across threads
-global RED
+
 RED=0
-global GREEN
 GREEN = 0
-global BLUE 
 BLUE = 255 
 
 #Set up LED, initialize to red 
@@ -35,8 +33,12 @@ pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 #callback for encoder
 #function for reading rotary encoder
 def rotary_callback(count):
-    print(count)
+    global RED
+    global GREEN
+    global BLUE 
+
     cscaled = count * 15 
+    print(cscaled)
     #if cscaled < 0:
     #    cscaled = 1534
     if cscaled < 255:
@@ -67,6 +69,9 @@ spwin=samplerate/resolution
 
 #Color picking thread 
 def color_picker():
+    global RED
+    global BLUE 
+    global GREEN
     print("Thread working")
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
@@ -83,6 +88,9 @@ def music_player():
 def audio_visualizer(psong):
     logging.info("Visualizing audio")
     time.sleep(1)
+    global RED
+    global BLUE 
+    global GREEN
   
     for t in range(len(psong)):
         audio_max=255*(psong[t]/9000)
