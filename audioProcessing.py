@@ -74,7 +74,7 @@ def audio_visualizer(psong):
     count = 0 
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
-    #my_rotary.watch()
+    my_rotary.watch()
     for t in range(len(psong)):
         audio_max=255*(psong[t]/9000)
         if audio_max > 255:
