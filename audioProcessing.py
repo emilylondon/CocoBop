@@ -30,7 +30,13 @@ pi.set_PWM_dutycycle(RED_PIN, RED)
 pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
 pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 
-#callback for encoder
+#helper function for LED outputs 
+def color_map(amp, color):
+    mapped = color*(amp/9000)
+    if mapped > 255:
+        mapped = 255
+    return mapped 
+
 #function for reading rotary encoder
 def rotary_callback(count):
     global RED
@@ -41,18 +47,18 @@ def rotary_callback(count):
     print(cscaled)
     #if cscaled < 0:
     #    cscaled = 1534
-    if cscaled < 255:
+    if cscaled <= 250:
         GREEN = cscaled
-    elif cscaled < 510:
-        RED = 255 - (cscaled-255)
-    elif cscaled < 765:
-        BLUE = cscaled - 510
-    elif cscaled < 1020:
-        GREEN = 255 - (count-765)
-    elif cscaled < 1275:
-        RED = cscaled - 1020
-    elif cscaled < 1535:
-        BLUE = 255 - (cscaled-1275)
+    elif cscaled <= 500:
+        RED = 255 - (cscaled-250)
+    elif cscaled <= 750:
+        BLUE = cscaled - 500
+    elif cscaled <= 1000:
+        GREEN = 255 - (count-750)
+    elif cscaled < 1250:
+        RED = cscaled - 1000
+    elif cscaled < 1500:
+        BLUE = 255 - (cscaled-1250)
     #elif cscaled > 1535:
     #    cscaled = 0
     time.sleep(0.05)
@@ -93,12 +99,12 @@ def audio_visualizer(psong):
     global GREEN
   
     for t in range(len(psong)):
-        audio_max=255*(psong[t]/9000)
-        if audio_max > 255:
-            audio_max=255
-        pi.set_PWM_dutycycle(RED_PIN, (audio_max+RED)/2)
-        pi.set_PWM_dutycycle(GREEN_PIN, (audio_max+GREEN)/2)
-        pi.set_PWM_dutycycle(BLUE_PIN, (audio_max+BLUE)/2)
+        r = color_map(psong[t], RED)
+        g = color_map(psong[t], GREEN)
+        b = color_map(psong[t], BLUE)
+        pi.set_PWM_dutycycle(RED_PIN, r)
+        pi.set_PWM_dutycycle(GREEN_PIN, g)
+        pi.set_PWM_dutycycle(BLUE_PIN, b)
         time.sleep(0.05)
     logging.info("Song over")
 
