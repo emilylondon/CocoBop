@@ -27,24 +27,27 @@ pi.set_PWM_dutycycle(GREEN_PIN, 0)
 #callback for encoder
 #function for reading rotary encoder
 def rotary_callback(count):
+    global colors
     colors = [0, 0, 0]
     print(count)
-    if count < 0:
-        count = 1534
-    elif count < 255:
-        colors[1] = count
-    elif count < 510:
-        colors[0] = 255 - (count-255)
-    elif count < 765:
-        colors[2] = count - 510
-    elif count < 1020:
+    cscaled = count * 12 
+    if cscaled < 0:
+        cscaled = 1534
+    elif cscaled < 255:
+        colors[1] = cscaled
+    elif cscaled < 510:
+        colors[0] = 255 - (cscaled-255)
+    elif cscaled < 765:
+        colors[2] = cscaled - 510
+    elif cscaled < 1020:
         colors[1] = 255 - (count-765)
-    elif count < 1275:
-        colors[0] = count - 1020
-    elif count < 1535:
-        colors[2] = 255 - (count-1275)
-    elif count > 1535:
-        count = 0
+    elif cscaled < 1275:
+        colors[0] = cscaled - 1020
+    elif cscaled < 1535:
+        colors[2] = 255 - (cscaled-1275)
+    elif cscaled > 1535:
+        cscaled = 0
+    time.sleep(0.05)
     return colors 
 
 
@@ -64,6 +67,10 @@ spwin=samplerate/resolution
 #Color picking thread 
 def color_picker():
     print("Thread working")
+    my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
+    my_rotary.setup_rotary(rotary_callback=rotary_callback)
+    my_rotary.watch()
+    
 
 #Thread for music player
 def music_player():
@@ -75,10 +82,7 @@ def music_player():
 def audio_visualizer(psong):
     logging.info("Visualizing audio")
     time.sleep(1)
-    count = 0 
-    my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
-    my_rotary.setup_rotary(rotary_callback=rotary_callback)
-    my_rotary.watch()
+  
     for t in range(len(psong)):
         audio_max=255*(psong[t]/9000)
         if audio_max > 255:
