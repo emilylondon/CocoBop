@@ -96,11 +96,10 @@ def color_picker():
     print("Thread working")
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=25)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
-    my_rotary.setup_switch(sw_short_callback=sw_short)
+    my_rotary.setup_switch(sw_short_callback=sw_short_callback)
     my_rotary.watch()
         
     
-#Thread for non interrupt
 def color_cycle():
     global flag
     global RED
@@ -184,9 +183,11 @@ if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
     t2 = threading.Thread(target=color_picker)
+    t3 = threading.Thread(target=color_cycle)
     t1.start()
     t0.start()
     t2.start()
+    t3.start()
 
 
     
