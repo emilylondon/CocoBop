@@ -115,8 +115,7 @@ def color_cycle():
         RED = 0
         GREEN = 0
         BLUE = 255
-        while True:
-            if flag == 0: 
+        while flag == 0: 
                 for r in range(255):
                     RED = r
                     time.sleep(0.05)
