@@ -49,6 +49,7 @@ def rotary_callback(count):
     print(cscaled)
     #rotary encoder turns for values
     if flag == 1:
+        flag = 1
         if cscaled == 0:
             RED = 255
             GREEN = 0
@@ -143,7 +144,6 @@ def music_player():
     pi.set_PWM_dutycycle(RED_PIN, 0)
     pi.set_PWM_dutycycle(GREEN_PIN, 0)
     pi.set_PWM_dutycycle(BLUE_PIN, 0)
-    os.system("python3 " + "playLights.py")
 
 #Visualization thread
 def audio_visualizer(psong):
