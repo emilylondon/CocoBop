@@ -23,6 +23,7 @@ DT = 4
 RED=255
 GREEN = 0
 BLUE = 0 
+flag = 0
 
 #Set up LED, initialize to red 
 pi = pigpio.pi()
@@ -42,7 +43,9 @@ def rotary_callback(count):
     global RED
     global GREEN
     global BLUE 
+    global flag
 
+    flag = 1
     cscaled = count * 15 
     print(cscaled)
     #if cscaled < 0:
@@ -82,19 +85,24 @@ resolution=20
 spwin=samplerate/resolution
 
 #Color picking thread 
-def color_picker(mode):
+def color_picker():
     global RED
     global BLUE 
     global GREEN
+    global flag
     print("Thread working")
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
-    if mode == "encoder":
-        pi.set_PWM_dutycycle(RED_PIN, 255)
-        pi.set_PWM_dutycycle(GREEN_PIN, 0)
-        pi.set_PWM_dutycycle(BLUE_PIN, 0)
-        my_rotary.watch()
-    elif mode == "cycle":
+    my_rotary.watch()
+        
+    
+#Thread for non interrupt
+def color_cycle():
+    global flag
+    global RED
+    global BLUE
+    global GREEN
+    if flag == 0:
         pi.set_PWM_dutycycle(RED_PIN, 0)
         pi.set_PWM_dutycycle(GREEN_PIN, 0)
         pi.set_PWM_dutycycle(BLUE_PIN, 255)
@@ -117,13 +125,13 @@ def color_picker(mode):
             for g in range(255, 0, -1):
                 GREEN = g
                 time.sleep(0.05)
-    
 
 #Thread for music player
 def music_player():
     logging.info("Playing song now")
     os.system("omxplayer " + "newSong.wav")
     logging.info("Song done")
+    quit()
 
 #Visualization thread
 def audio_visualizer(psong):
@@ -172,9 +180,11 @@ psong=window_rms(r, window_size=int(spwin))
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
-    t2 = threading.Thread(target=color_picker, args=(mode,))
+    t2 = threading.Thread(target=color_picker)
+    t3 = threading.Thread(target=color_cycle)
     t1.start()
     t0.start()
     t2.start()
+    t3.start()
     
     
