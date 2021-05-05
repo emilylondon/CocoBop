@@ -131,8 +131,7 @@ def music_player():
     logging.info("Playing song now")
     os.system("omxplayer " + "newSong.wav")
     logging.info("Song done")
-    sys.exit()
-    quit()
+    os.system("python3 " + "playLights.py")
 
 #Visualization thread
 def audio_visualizer(psong):
@@ -154,7 +153,6 @@ def audio_visualizer(psong):
     pi.set_PWM_dutycycle(RED_PIN, 0)
     pi.set_PWM_dutycycle(GREEN_PIN, 0)
     pi.set_PWM_dutycycle(BLUE_PIN, 0)
-    quit()
 
 #function for RMS 
 def window_rms(a, window_size=2):
@@ -187,7 +185,6 @@ if __name__ == "__main__":
     t0.start()
     t2.start()
     t3.start()
-    sys.exit()
-    quit()
+
     
     
