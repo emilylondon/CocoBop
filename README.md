@@ -1,61 +1,83 @@
 # DanceParty
 EE250 Final Project 
 
-Install yt-dl 
+## Team Member Names 
+Emily London
+
+## Demo Video Link
+https://www.youtube.com/watch?v=aU3Hequax4g
+
+## Installation Guide 
+
+### On Node 1: Host Computer 
+
+#### Activate virtual environment
+``` 
+python3 -m venv ./venv
+source venv/bin/activate
+```
+#### Install Required Libraries to run ytSearch.py
+##### Install Google Ai Python Client 
+```
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+```
+##### Install Paho-MQTT 
+```
+pip3 install paho-mqtt
+```
+#### Run code 
+```
+python3 ytSearch.py
+```
+
+### On Node 2: Raspberry Pi
+#### Activate virtual environment 
+``` 
+python3 -m venv ./venv
+source venv/bin/activate
+```
+#### Install yt-dl 
 ```
 sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
 sudo chmod a+rx /usr/local/bin/youtube-dl
 ```
-
-Open venv
-run:
-``` 
-python3 -m venv ./venv
-source venv/bin/activate
-pip3 install youtube_dl
-pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-pip
-deactivate
-```
-
-Install ffmpeg
+#### Install ffmpeg 
 ```
 sudo apt-get install ffmpeg
 ```
-and macOS use the command:
-```
-brew install ffmpeg
-```
-Install Certificate Command: 
-run: 
-```
-/Applications/Python\ 3.7/Install\ Certificates.command
-```
-Install Paho-Mqtt
+#### Install requisite libraries
+##### Install Paho-MQTT
 ```
 pip3 install paho-mqtt
 ```
-Install Librosa, Numpy, and PyGame
+##### Install scipy 
 ```
-pip3 install librosa
-pip3 install numpy 
-pip3 install pygame
 pip3 install scipy
-sudo apt-get install libatlas-base-dev
-sudo apt-get install libsdl-ttf2.0-0
-
 ```
-
-Install pigpio for LED strip and start the daemon
-
+##### Install numpy
 ```
+pip3 install numpy
+```
+##### Install pigpio
+```
+sudo apt-get install pigpio python-pigpio python3-pigpio
 pip3 install pigpio
-sudo pigpiod 
-
+```
+##### Install pigpio-encoder
+```
+pip install pigpio_encoder
+```
+#### Run code 
+```
+sudo pigpiod
+python3 playLights.py
 ```
 
-Install GrovePi stuff 
-
-```
-curl -sL https://github.com/Seeed-Studio/grove.py/raw/master/install.sh | sudo bash -s -
-```
+### All External Libraries Used 
+paho-mqtt
+youtube-dl 
+numpy
+scipy
+pigpiod
+pigpiod-encoder
+Google API Python Client 
