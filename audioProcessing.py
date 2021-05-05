@@ -94,7 +94,7 @@ def color_picker(mode):
     elif mode == "cycle":
         pi.set_PWM_dutycycle(RED_PIN, 0)
         pi.set_PWM_dutycycle(GREEN_PIN, 0)
-        pi.set_PWM_dutycycle(BLUE_PIN,0)
+        pi.set_PWM_dutycycle(BLUE_PIN, 255)
         while True: 
             for r in range(255):
                 RED = r
