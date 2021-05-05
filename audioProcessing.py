@@ -45,39 +45,42 @@ def rotary_callback(count):
     global BLUE 
     global flag
 
-    flag = 1
     cscaled = count * 15 
     print(cscaled)
-    #if cscaled < 0:
-    #    cscaled = 1534
-    if cscaled == 0:
-        RED = 255
-        GREEN = 0
-        BLUE = 0 
-    elif cscaled <= 250:
-        GREEN = cscaled
-    elif 250 < cscaled <= 500:
-        RED = 255 - (cscaled-250)
-    elif 500 < cscaled <= 750:
-        BLUE = cscaled - 500
-    elif 750 < cscaled <= 1000:
-        GREEN = 255 - (cscaled-750)
-    elif 1000 < cscaled < 1250:
-        RED = cscaled - 1000
-    elif 1250 < cscaled < 1500:
-        BLUE = 255 - (cscaled-1250)
-    elif cscaled == 1500:
-        RED = 255
-        GREEN = 0
-        BLUE = 0 
-    #elif cscaled > 1535:
-    #    cscaled = 0
-    time.sleep(0.05)
+    #rotary encoder turns for values
+    while flag == 1:
+        if cscaled == 0:
+            RED = 255
+            GREEN = 0
+            BLUE = 0 
+        elif cscaled <= 250:
+            GREEN = cscaled
+        elif 250 < cscaled <= 500:
+            RED = 255 - (cscaled-250)
+        elif 500 < cscaled <= 750:
+            BLUE = cscaled - 500
+        elif 750 < cscaled <= 1000:
+            GREEN = 255 - (cscaled-750)
+        elif 1000 < cscaled < 1250:
+            RED = cscaled - 1000
+        elif 1250 < cscaled < 1500:
+            BLUE = 255 - (cscaled-1250)
+        elif cscaled == 1500:
+            RED = 255
+            GREEN = 0
+            BLUE = 0 
+        time.sleep(0.05)
+
+#Switch from cycle to rotary encoder mode 
+def sw_short_callback():
+    global flag
+    if flag == 0:
+        flag == 1
+    else:
+        flag ==0
 
 
 
-#Divisor 
-ROT_MAX=1023
 
 #set up audio processing parameters
 samplerate=44100
@@ -91,8 +94,9 @@ def color_picker():
     global GREEN
     global flag
     print("Thread working")
-    my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
+    my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=25)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
+    my_rotary.setup_switch(sw_short_callback=sw_short)
     my_rotary.watch()
         
     
@@ -106,7 +110,7 @@ def color_cycle():
         pi.set_PWM_dutycycle(RED_PIN, 0)
         pi.set_PWM_dutycycle(GREEN_PIN, 0)
         pi.set_PWM_dutycycle(BLUE_PIN, 255)
-        while True: 
+        while flag == 0: 
             for r in range(255):
                 RED = r
                 time.sleep(0.05)
@@ -180,11 +184,10 @@ if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
     t2 = threading.Thread(target=color_picker)
-    t3 = threading.Thread(target=color_cycle)
     t1.start()
     t0.start()
     t2.start()
-    t3.start()
+
 
     
     
