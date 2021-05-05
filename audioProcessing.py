@@ -131,8 +131,7 @@ def music_player():
     logging.info("Playing song now")
     os.system("omxplayer " + "newSong.wav")
     logging.info("Song done")
-    exit()
-    quit()
+    sys.exit()
 
 #Visualization thread
 def audio_visualizer(psong):
