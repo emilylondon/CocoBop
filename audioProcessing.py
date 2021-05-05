@@ -104,7 +104,7 @@ def color_picker(mode):
             for g in range(255):
                 GREEN = g
                 pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
-                time.sleep(255)
+                time.sleep(0.05)
             for r in range(255, 0, -1):
                 RED = r 
                 pi.set_PWM_dutycycle(RED_PIN, RED)
