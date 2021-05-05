@@ -92,30 +92,31 @@ def color_picker(mode):
     if mode == "encoder":
         my_rotary.watch()
     elif mode == "cycle":
-        for r in range(255):
-            RED = r
-            pi.set_PWM_dutycycle(RED_PIN, RED)
-            time.sleep(0.005)
-        for b in range(255, 0, -1):
-            BLUE = b
-            pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
-            time.sleep(0.005)
-        for g in range(255):
-            GREEN = g
-            pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
-            time.sleep(0.005)
-        for r in range(255, 0, -1):
-            RED = r 
-            pi.set_PWM_dutycycle(RED_PIN, RED)
-            time.sleep(0.005)
-        for b in range(255):
-            BLUE = b
-            pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
-            time.sleep(0.005)
-        for g in range(255, 0, -1):
-            GREEN = g
-            pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
-            time.sleep(0.005)
+        while True: 
+            for r in range(255):
+                RED = r
+                pi.set_PWM_dutycycle(RED_PIN, RED)
+                time.sleep(0.05)
+            for b in range(255, 0, -1):
+                BLUE = b
+                pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
+                time.sleep(0.05)
+            for g in range(255):
+                GREEN = g
+                pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
+                time.sleep(0.05)
+            for r in range(255, 0, -1):
+                RED = r 
+                pi.set_PWM_dutycycle(RED_PIN, RED)
+                time.sleep(0.05)
+            for b in range(255):
+                BLUE = b
+                pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
+                time.sleep(0.05)
+            for g in range(255, 0, -1):
+                GREEN = g
+                pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
+                time.sleep(0.05)
     
 
 #Thread for music player
