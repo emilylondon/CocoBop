@@ -74,8 +74,14 @@ def rotary_callback(count):
 #Switch from cycle to rotary encoder mode 
 def sw_short_callback():
     global flag
+    global RED
+    global GREEN
+    global BLUE
     if flag == 0:
         flag == 1
+        RED = 255 
+        GREEN = 0
+        BLUE = 0
     else:
         flag ==0
 
