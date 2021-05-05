@@ -185,5 +185,6 @@ if __name__ == "__main__":
     t0.start()
     t2.start()
     t3.start()
+    sys.exit()
     
     
