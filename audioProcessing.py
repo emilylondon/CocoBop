@@ -48,7 +48,7 @@ def rotary_callback(count):
     cscaled = count * 15 
     print(cscaled)
     #rotary encoder turns for values
-    while flag == 1:
+    if flag == 1:
         if cscaled == 0:
             RED = 255
             GREEN = 0
