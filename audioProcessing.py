@@ -82,14 +82,40 @@ resolution=20
 spwin=samplerate/resolution
 
 #Color picking thread 
-def color_picker():
+def color_picker(mode):
     global RED
     global BLUE 
     global GREEN
     print("Thread working")
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
-    my_rotary.watch()
+    if mode == "encoder":
+        my_rotary.watch()
+    elif mode == "cycle":
+        for r in range(255):
+            RED = r
+            pi.set_PWM_dutycycle(RED_PIN, RED)
+            time.sleep(0.005)
+        for b in range(255, 0, -1):
+            BLUE = b
+            pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
+            time.sleep(0.005)
+        for g in range(255):
+            GREEN = g
+            pi.set_PWM_dutycycle(255, GREEN)
+            time.sleep(0.005)
+        for r in range(255, 0, -1):
+            RED = r 
+            pi.set_PWM_dutycycle(RED_PIN, RED)
+            time.sleep(0.005)
+        for b in range(255):
+            BLUE = b
+            pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
+            time.sleep(0.005)
+        for g in range(255, 0, -1):
+            GREEN = g
+            pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
+            time.sleep(0.005)
     
 
 #Thread for music player
@@ -137,6 +163,7 @@ r = np.array(a[1], dtype=float)
 print(r[0])
 print(r.shape)
 
+mode = input("Enter mode, \"cycle\" or \"encoder\": ")
 #2205 samples per window 
 psong=window_rms(r, window_size=int(spwin))
 
@@ -144,7 +171,7 @@ psong=window_rms(r, window_size=int(spwin))
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
-    t2 = threading.Thread(target=color_picker)
+    t2 = threading.Thread(target=color_picker, args=(mode,))
     t1.start()
     t0.start()
     t2.start()
