@@ -131,6 +131,7 @@ def music_player():
     logging.info("Playing song now")
     os.system("omxplayer " + "newSong.wav")
     logging.info("Song done")
+    exit()
     quit()
 
 #Visualization thread
@@ -172,7 +173,6 @@ r = np.array(a[1], dtype=float)
 print(r[0])
 print(r.shape)
 
-mode = input("Enter mode, \"cycle\" or \"encoder\": ")
 #2205 samples per window 
 psong=window_rms(r, window_size=int(spwin))
 
