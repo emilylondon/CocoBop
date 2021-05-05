@@ -78,7 +78,7 @@ def sw_short_callback():
     global GREEN
     global BLUE
     if flag == 0:
-        flag == 1
+        flag = 1
         RED = 255 
         GREEN = 0
         BLUE = 0
