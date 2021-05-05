@@ -112,9 +112,9 @@ def color_cycle():
     global BLUE
     global GREEN
     if flag == 0:
-        pi.set_PWM_dutycycle(RED_PIN, 0)
-        pi.set_PWM_dutycycle(GREEN_PIN, 0)
-        pi.set_PWM_dutycycle(BLUE_PIN, 255)
+        RED = 0
+        GREEN = 0
+        BLUE = 255
         while flag == 0: 
             for r in range(255):
                 RED = r
