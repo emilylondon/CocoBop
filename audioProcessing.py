@@ -90,6 +90,9 @@ def color_picker(mode):
     my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=16)
     my_rotary.setup_rotary(rotary_callback=rotary_callback)
     if mode == "encoder":
+        pi.set_PWM_dutycycle(RED_PIN, 255)
+        pi.set_PWM_dutycycle(GREEN_PIN, 0)
+        pi.set_PWM_dutycycle(BLUE_PIN, 0)
         my_rotary.watch()
     elif mode == "cycle":
         pi.set_PWM_dutycycle(RED_PIN, 0)
@@ -98,27 +101,21 @@ def color_picker(mode):
         while True: 
             for r in range(255):
                 RED = r
-                pi.set_PWM_dutycycle(RED_PIN, RED)
                 time.sleep(0.05)
             for b in range(255, 0, -1):
                 BLUE = b
-                pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
                 time.sleep(0.05)
             for g in range(255):
                 GREEN = g
-                pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
                 time.sleep(0.05)
             for r in range(255, 0, -1):
                 RED = r 
-                pi.set_PWM_dutycycle(RED_PIN, RED)
                 time.sleep(0.05)
             for b in range(255):
                 BLUE = b
-                pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
                 time.sleep(0.05)
             for g in range(255, 0, -1):
                 GREEN = g
-                pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
                 time.sleep(0.05)
     
 
