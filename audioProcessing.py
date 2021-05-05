@@ -92,9 +92,9 @@ def color_picker(mode):
     if mode == "encoder":
         my_rotary.watch()
     elif mode == "cycle":
-        pi.set_PWM_dutycycle(RED_PIN, RED)
-        pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
-        pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
+        pi.set_PWM_dutycycle(RED_PIN, 0)
+        pi.set_PWM_dutycycle(GREEN_PIN, 0)
+        pi.set_PWM_dutycycle(BLUE_PIN,0)
         while True: 
             for r in range(255):
                 RED = r
