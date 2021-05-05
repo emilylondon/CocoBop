@@ -116,24 +116,24 @@ def color_cycle():
         GREEN = 0
         BLUE = 255
         while flag == 0: 
-                for r in range(255):
-                    RED = r
-                    time.sleep(0.05)
-                for b in range(255, 0, -1):
-                    BLUE = b
-                    time.sleep(0.05)
-                for g in range(255):
-                    GREEN = g
-                    time.sleep(0.05)
-                for r in range(255, 0, -1):
-                    RED = r 
-                    time.sleep(0.05)
-                for b in range(255):
-                    BLUE = b
-                    time.sleep(0.05)
-                for g in range(255, 0, -1):
-                    GREEN = g
-                    time.sleep(0.05)
+            for r in range(255):
+                RED = r
+                time.sleep(0.05)
+            for b in range(255, 0, -1):
+                BLUE = b
+                time.sleep(0.05)
+            for g in range(255):
+                GREEN = g
+                time.sleep(0.05)
+            for r in range(255, 0, -1):
+                RED = r 
+                time.sleep(0.05)
+            for b in range(255):
+                BLUE = b
+                time.sleep(0.05)
+            for g in range(255, 0, -1):
+                GREEN = g
+                time.sleep(0.05)
 
 #Thread for music player
 def music_player():
