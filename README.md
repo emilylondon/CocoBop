@@ -1,4 +1,4 @@
-# DanceParty
+# CocoBop
 EE250 Final Project 
 
 ## Team Member Names 
