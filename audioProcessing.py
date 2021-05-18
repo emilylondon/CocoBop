@@ -34,7 +34,7 @@ pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 
 #helper function for LED outputs 
 def color_map(amp, color):
-    mapped = color*(math.log(amp,100))
+    mapped = color*(math.log(abs(amp),10))
     if mapped > 255:
         mapped = 255
     return mapped 
