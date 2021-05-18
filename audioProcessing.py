@@ -1,6 +1,7 @@
 from scipy.io.wavfile import read
 import numpy as np
 import time
+import math
 import threading
 import logging
 import pigpio
@@ -33,7 +34,7 @@ pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 
 #helper function for LED outputs 
 def color_map(amp, color):
-    mapped = color*(amp/9000)
+    mapped = color*(math.log(amp,10))
     if mapped > 255:
         mapped = 255
     return mapped 
