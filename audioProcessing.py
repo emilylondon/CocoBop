@@ -1,7 +1,6 @@
 from scipy.io.wavfile import read
 import numpy as np
 import time
-import math
 import threading
 import logging
 import pigpio
@@ -11,8 +10,8 @@ from pigpio_encoder import pigpio_encoder
 
 #sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 #import grovepi
-
 #set up input pins for rotary encoder and LED pins
+
 RED_PIN   = 17
 GREEN_PIN = 22
 BLUE_PIN  = 24
@@ -27,12 +26,14 @@ BLUE = 0
 flag = 0
 
 #Set up LED, initialize to red 
+
 pi = pigpio.pi()
 pi.set_PWM_dutycycle(RED_PIN, RED)
 pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
 pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 
 #helper function for LED outputs 
+
 def color_map(amp, color):
     mapped = color*(amp/9000)
     if mapped > 255:
@@ -40,15 +41,17 @@ def color_map(amp, color):
     return mapped 
 
 #function for reading rotary encoder
+
 def rotary_callback(count):
     global RED
     global GREEN
     global BLUE 
     global flag
-
     cscaled = count * 15 
     print(cscaled)
+
     #rotary encoder turns for values
+
     if flag == 1:
         flag = 1
         if cscaled == 0:
@@ -74,6 +77,7 @@ def rotary_callback(count):
         time.sleep(0.05)
 
 #Switch from cycle to rotary encoder mode 
+
 def sw_short_callback():
     global flag
     global RED
@@ -86,16 +90,14 @@ def sw_short_callback():
         BLUE = 0
     else:
         flag ==0
-
-
-
-
 #set up audio processing parameters
+
 samplerate=44100
 resolution=20
 spwin=samplerate/resolution
 
 #Color picking thread 
+
 def color_picker():
     global RED
     global BLUE 
@@ -173,7 +175,6 @@ def window_rms(a, window_size=2):
         energy = np.sqrt(np.mean(a[s:e]**2))
         energy_list.append(energy)
     return energy_list
-
 #read in file
 file_name = 'newSong.wav'
 print("File downloaded and loaded in")
@@ -181,10 +182,8 @@ a = read(file_name)
 r = np.array(a[1], dtype=float)
 print(r[0])
 print(r.shape)
-
 #2205 samples per window 
 psong=window_rms(r, window_size=int(spwin))
-
 #start visualizing!
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
@@ -195,7 +194,3 @@ if __name__ == "__main__":
     t0.start()
     t2.start()
     t3.start()
-
-
-    
-    
