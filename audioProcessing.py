@@ -99,7 +99,6 @@ def audio_visualizer(psong, pcolors):
         pi.set_PWM_dutycycle(RED_PIN, r)
         pi.set_PWM_dutycycle(GREEN_PIN, g)
         pi.set_PWM_dutycycle(BLUE_PIN, b)
-        print(pcolors[t].shape)
         time.sleep(0.05)
     logging.info("Song over")
 
@@ -125,6 +124,7 @@ print(r[0])
 print(r.shape)
 #2205 samples per window 
 psong, pcolors=window_rms(r, window_size=int(spwin))
+print(pcolors[1])
 #start visualizing!
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
