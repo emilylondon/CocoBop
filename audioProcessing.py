@@ -103,6 +103,7 @@ def audio_visualizer(psong, pcolors):
         time.sleep(0.05)
     logging.info("Song over")
 
+
 #function for RMS 
 def window_rms(a, window_size=2):
     energy_list = []
@@ -111,7 +112,7 @@ def window_rms(a, window_size=2):
         e = s + window_size
         #energy = np.sum(np.abs(a[s:e]**2))
         energy = np.sqrt(np.mean(a[s:e]**2))
-        color = np.fft(a)
+        color = np.fft.fft(a)
         energy_list.append(energy)
         color_fft_list.append(color)
     return energy_list, color_fft_list
