@@ -20,7 +20,7 @@ DT = 4
 
 #Brightness Values for RGB, make them global so they can be modified across threads
 
-RED=255
+RED=0
 GREEN = 0
 BLUE = 0 
 flag = 0
@@ -40,76 +40,13 @@ def color_map(amp, color):
         mapped = 255
     return mapped 
 
-#function for reading rotary encoder
-
-def rotary_callback(count):
-    global RED
-    global GREEN
-    global BLUE 
-    global flag
-    cscaled = count * 15 
-    print(cscaled)
-
-    #rotary encoder turns for values
-
-    if flag == 1:
-        flag = 1
-        if cscaled == 0:
-            RED = 255
-            GREEN = 0
-            BLUE = 0 
-        elif cscaled <= 250:
-            GREEN = cscaled
-        elif 250 < cscaled <= 500:
-            RED = 255 - (cscaled-250)
-        elif 500 < cscaled <= 750:
-            BLUE = cscaled - 500
-        elif 750 < cscaled <= 1000:
-            GREEN = 255 - (cscaled-750)
-        elif 1000 < cscaled < 1250:
-            RED = cscaled - 1000
-        elif 1250 < cscaled < 1500:
-            BLUE = 255 - (cscaled-1250)
-        elif cscaled == 1500:
-            RED = 255
-            GREEN = 0
-            BLUE = 0 
-        time.sleep(0.05)
-
-#Switch from cycle to rotary encoder mode 
-
-def sw_short_callback():
-    global flag
-    global RED
-    global GREEN
-    global BLUE
-    if flag == 0:
-        flag = 1
-        RED = 255 
-        GREEN = 0
-        BLUE = 0
-    else:
-        flag ==0
 #set up audio processing parameters
 
 samplerate=44100
 resolution=20
 spwin=samplerate/resolution
-
-#Color picking thread 
-
-def color_picker():
-    global RED
-    global BLUE 
-    global GREEN
-    global flag
-    print("Thread working")
-    my_rotary = pigpio_encoder.Rotary(clk=CLK, dt=DT, sw=25)
-    my_rotary.setup_rotary(rotary_callback=rotary_callback)
-    my_rotary.setup_switch(sw_short_callback=sw_short_callback)
-    my_rotary.watch()
         
-    
+ #color cycle thread    
 def color_cycle():
     global flag
     global RED
@@ -188,9 +125,7 @@ psong=window_rms(r, window_size=int(spwin))
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
     t1 = threading.Thread(target=audio_visualizer, args = (psong,))
-    t2 = threading.Thread(target=color_picker)
-    t3 = threading.Thread(target=color_cycle)
+    t2 = threading.Thread(target=color_cycle)
     t1.start()
     t0.start()
     t2.start()
-    t3.start()
