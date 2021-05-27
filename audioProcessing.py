@@ -20,7 +20,7 @@ DT = 4
 
 #Brightness Values for RGB, make them global so they can be modified across threads
 
-RED=0
+RED=255
 GREEN = 0
 BLUE = 0 
 flag = 0
@@ -32,7 +32,6 @@ pi.set_PWM_dutycycle(RED_PIN, RED)
 pi.set_PWM_dutycycle(BLUE_PIN, BLUE)
 pi.set_PWM_dutycycle(GREEN_PIN, GREEN)
 
-#helper function for LED outputs 
 
 def color_map(amp, color):
     mapped = color*(amp/9000)
@@ -86,7 +85,7 @@ def music_player():
     pi.set_PWM_dutycycle(BLUE_PIN, 0)
 
 #Visualization thread
-def audio_visualizer(psong):
+def audio_visualizer(psong, pcolors):
     logging.info("Visualizing audio")
     time.sleep(1)
     global RED
@@ -100,18 +99,22 @@ def audio_visualizer(psong):
         pi.set_PWM_dutycycle(RED_PIN, r)
         pi.set_PWM_dutycycle(GREEN_PIN, g)
         pi.set_PWM_dutycycle(BLUE_PIN, b)
+        print(pcolors[t].shape)
         time.sleep(0.05)
     logging.info("Song over")
 
 #function for RMS 
 def window_rms(a, window_size=2):
     energy_list = []
+    color_fft_list = []
     for s in range(0, a.shape[0], window_size):
         e = s + window_size
         #energy = np.sum(np.abs(a[s:e]**2))
         energy = np.sqrt(np.mean(a[s:e]**2))
+        color = np.fft(a)
         energy_list.append(energy)
-    return energy_list
+        color_fft_list.append(color)
+    return energy_list, color_fft_list
 #read in file
 file_name = 'newSong.wav'
 print("File downloaded and loaded in")
@@ -120,11 +123,11 @@ r = np.array(a[1], dtype=float)
 print(r[0])
 print(r.shape)
 #2205 samples per window 
-psong=window_rms(r, window_size=int(spwin))
+psong, pcolors=window_rms(r, window_size=int(spwin))
 #start visualizing!
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
-    t1 = threading.Thread(target=audio_visualizer, args = (psong,))
+    t1 = threading.Thread(target=audio_visualizer, args = (psong, pcolors))
     t2 = threading.Thread(target=color_cycle)
     t1.start()
     t0.start()
