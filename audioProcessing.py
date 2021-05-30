@@ -85,7 +85,7 @@ def music_player():
     pi.set_PWM_dutycycle(BLUE_PIN, 0)
 
 #Visualization thread
-def audio_visualizer(psong, pcolors):
+def audio_visualizer(psong):
     logging.info("Visualizing audio")
     time.sleep(1)
     global RED
@@ -106,15 +106,12 @@ def audio_visualizer(psong, pcolors):
 #function for RMS 
 def window_rms(a, window_size=2):
     energy_list = []
-    color_fft_list = []
     for s in range(0, a.shape[0], window_size):
         e = s + window_size
         #energy = np.sum(np.abs(a[s:e]**2))
         energy = np.sqrt(np.mean(a[s:e]**2))
-        color = np.fft.fft(a)
         energy_list.append(energy)
-        color_fft_list.append(color)
-    return energy_list, color_fft_list
+    return energy_list
 #read in file
 file_name = 'newSong.wav'
 print("File downloaded and loaded in")
@@ -123,12 +120,11 @@ r = np.array(a[1], dtype=float)
 print(r[0])
 print(r.shape)
 #2205 samples per window 
-psong, pcolors=window_rms(r, window_size=int(spwin))
-print(pcolors[1])
+psong=window_rms(r, window_size=int(spwin))
 #start visualizing!
 if __name__ == "__main__":
     t0 = threading.Thread(target=music_player)
-    t1 = threading.Thread(target=audio_visualizer, args = (psong, pcolors))
+    t1 = threading.Thread(target=audio_visualizer, args = (psong,))
     t2 = threading.Thread(target=color_cycle)
     t1.start()
     t0.start()
